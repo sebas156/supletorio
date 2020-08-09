@@ -9,6 +9,7 @@ using std::chrono::system_clock;
 using namespace std;
 
 struct VariableTimepo{
+    int dia;
     int hora;
     int minutos;
     int segundos;

@@ -19,7 +19,7 @@ public:
     //_____________________________________________________________
     bool BuscarUsuarioIngresado(string,string);
     char MenuInterfazUsuario();
-    bool RegistrarNuevoUsuario(string, string);
+    void RegistrarNuevoUsuario(string, string);
     void AgregarVehiculoAmiNombre(string,string);
     void EliminarVehiculoAmiNombre(string,string);
     bool VerificarSiEsELmismoVehiculo(string,string);
@@ -29,10 +29,13 @@ public:
     void cambio_diniero(int *);
     void MovimientoRegistrar(string,string);
     void IngresarVehiculoAlParqueadero();
+    void SacarVehiculoDelParqueadero();
+    void TiqueteParaUsuario(vehiculo* ,int);
     //_____________________________________________________________
 
     //Para Administrador
     //_____________________________________________________________
+    bool VerificarInicioSesion(string, string);
     char MenuInterfazAdministrador();
     void ArchivoAdministrador();
     void PorcentajeOcupadoDeCadaUnoDelosPisos();
@@ -59,6 +62,11 @@ public:
     void RegistrarUsuariosActuales();
     void RegistrarArchivoPorUsuario(string,int);
     void DesactivarCeldasOcupadas();
+    void OrdenamientoPorIncersion1();
+    void OrdenamientoPorIncersion2();
+    void OrdenamientoPorIncersion3();
+    void OrdenamientoPorIncersion4();
+    void OrdenamientoPorIncersion5();
     //_____________________________________________________________
 private:
     vector<usuario> TodosLosUsuarios;

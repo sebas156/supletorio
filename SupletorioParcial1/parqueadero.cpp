@@ -14,6 +14,7 @@ parqueadero::parqueadero()
         }
     }
     //--------------------------------------------
+    ArchivoAdministrador();
     LeerTarifas();
     LeerRegistroDeUsuarios();
     LlenarMasDatosDelConductor();
@@ -53,18 +54,17 @@ char parqueadero::MenuInterfazUsuario()
     return opcion;
 }
 
-bool parqueadero::RegistrarNuevoUsuario(string NuevoNombre, string contrasenaNueva)
+void parqueadero::RegistrarNuevoUsuario(string NuevoNombre, string contrasenaNueva)
 {
     if(VerificarNombreIngresadoEstaEnArreglo(NuevoNombre)==false){
         usuario Auxiliar;
         Auxiliar.SetNombreUsuario(NuevoNombre);
         Auxiliar.SetContrasena(contrasenaNueva);
         TodosLosUsuarios.push_back(Auxiliar);
-        return true;
+        cout<<"El usuario se ha creado exitosamente. "<<endl;
     }
     else {
         cout<<"El nombre solicitado ya se encuentra en uso. "<<endl;
-        return false;
     }
 }
 
@@ -75,10 +75,11 @@ void parqueadero::AgregarVehiculoAmiNombre(string Tipo, string PlacaNueva)
         Auxiliar.SetTipoVehiculo(Tipo);
         Auxiliar.SetPlacaVehiculo(PlacaNueva);
         Auxiliar.SetTipoEstacionamiento('T');
-        Auxiliar.SetCelda(-1);
-        Auxiliar.SetPiso(-1);
+        Auxiliar.SetCelda(0);
+        Auxiliar.SetPiso(0);
         Auxiliar.SetBanderaParqueadero(0);
-        Auxiliar.SetTipoDeCobro(-1);
+        Auxiliar.SetTipoDeCobro(0);
+        Auxiliar.Ingreso.dia=0;
         Auxiliar.Ingreso.hora=0;
         Auxiliar.Ingreso.minutos=0;
         Auxiliar.Ingreso.segundos=0;
@@ -591,7 +592,7 @@ void parqueadero::RegistrarArchivoPorUsuario(string usuario, int posicionActual)
         cout<<"Error al abrir el archivo. LeerRegistroUsuairos"<<endl;
     else {
         for(auto i: TodosLosUsuarios[posicionActual].VehiculosRegistrados){
-            archivoUsuarios<<i.GetTipoVehiculo()<<","<<i.GetPlacaVehiculo()<<","<<i.GetTipoEstacionamiento()<<","<<i.GetPiso()<<","<<i.GetCelda()<<","<<i.GetBanderaParqueadero()<<","<<i.GetTipoDeCobro()<<","<<i.Ingreso.hora<<","<<i.Ingreso.minutos<<","<<i.Ingreso.segundos<<endl;
+            archivoUsuarios<<i.GetTipoVehiculo()<<","<<i.GetPlacaVehiculo()<<","<<i.GetTipoEstacionamiento()<<","<<i.GetPiso()<<","<<i.GetCelda()<<","<<i.GetBanderaParqueadero()<<","<<i.GetTipoDeCobro()<<","<<i.Ingreso.dia<<","<<i.Ingreso.hora<<","<<i.Ingreso.minutos<<","<<i.Ingreso.segundos<<endl;
         }
     }
 
@@ -638,6 +639,110 @@ void parqueadero::DesactivarCeldasOcupadas()
                 }
             }
         }
+    }
+}
+
+void parqueadero::OrdenamientoPorIncersion1()
+{
+    // Metodo clasico de ordenamiento por insercion sobre el vector de usuarios registrados. Tomando como referencia
+    // la equivalencia del nombre de usuario. Explicado anteriormente.
+//    int pos;
+//    int aux;
+//    for (int i = 0;i<CeldasDisponiblesPiso1.size();i++) {
+//        pos=i;
+//        aux=CeldasDisponiblesPiso1[i];
+//        while ((pos>0) and CeldasDisponiblesPiso1[pos-1] > aux) {
+//            CeldasDisponiblesPiso1[pos]=CeldasDisponiblesPiso1[pos-1];
+//            pos--;
+//        }
+//        CeldasDisponiblesPiso1[pos]=aux;
+//    }
+    list<int>::iterator pos,pos1;
+    int aux;
+    for(auto i = CeldasDisponiblesPiso1.begin(); i != CeldasDisponiblesPiso1.end();i++){
+        pos = i;
+        pos1=pos;
+        pos1--;
+        aux=(*i);
+        while ((pos!=CeldasDisponiblesPiso1.begin()) and *(pos1) > aux) {
+           pos=pos1;
+            pos--;
+        }
+        (*pos)=aux;
+    }
+}
+void parqueadero::OrdenamientoPorIncersion2()
+{
+    // Metodo clasico de ordenamiento por insercion sobre el vector de usuarios registrados. Tomando como referencia
+    // la equivalencia del nombre de usuario. Explicado anteriormente.
+    list<int>::iterator pos,pos1;
+    int aux;
+    for(auto i = CeldasDisponiblesPiso2.begin(); i != CeldasDisponiblesPiso2.end();i++){
+        pos = i;
+        pos1=pos;
+        pos1--;
+        aux=(*i);
+        while ((pos!=CeldasDisponiblesPiso2.begin()) and *(pos1) > aux) {
+           pos=pos1;
+            pos--;
+        }
+        (*pos)=aux;
+    }
+}
+void parqueadero::OrdenamientoPorIncersion3()
+{
+    // Metodo clasico de ordenamiento por insercion sobre el vector de usuarios registrados. Tomando como referencia
+    // la equivalencia del nombre de usuario. Explicado anteriormente.
+    list<int>::iterator pos,pos1;
+    int aux;
+    for(auto i = CeldasDisponiblesPiso3.begin(); i != CeldasDisponiblesPiso3.end();i++){
+        pos = i;
+        pos1=pos;
+        pos1--;
+        aux=(*i);
+        while ((pos!=CeldasDisponiblesPiso3.begin()) and *(pos1) > aux) {
+           pos=pos1;
+            pos--;
+        }
+        (*pos)=aux;
+    }
+}
+void parqueadero::OrdenamientoPorIncersion4()
+{
+    // Metodo clasico de ordenamiento por insercion sobre el vector de usuarios registrados. Tomando como referencia
+    // la equivalencia del nombre de usuario. Explicado anteriormente.
+
+    list<int>::iterator pos,pos1;
+    int aux;
+    for(auto i = CeldasDisponiblesPiso4.begin(); i != CeldasDisponiblesPiso4.end();i++){
+        pos = i;
+        pos1=pos;
+        pos1--;
+        aux=(*i);
+        while ((pos!=CeldasDisponiblesPiso4.begin()) and *(pos1) > aux) {
+           pos=pos1;
+            pos--;
+        }
+        (*pos)=aux;
+    }
+}
+void parqueadero::OrdenamientoPorIncersion5()
+{
+    // Metodo clasico de ordenamiento por insercion sobre el vector de usuarios registrados. Tomando como referencia
+    // la equivalencia del nombre de usuario. Explicado anteriormente.
+
+    list<int>::iterator pos,pos1;
+    int aux;
+    for(auto i = CeldasDisponiblesPiso5.begin(); i != CeldasDisponiblesPiso5.end();i++){
+        pos = i;
+        pos1=pos;
+        pos1--;
+        aux=(*i);
+        while ((pos!=CeldasDisponiblesPiso5.begin()) and *(pos1) > aux) {
+           pos=pos1;
+            pos--;
+        }
+        (*pos)=aux;
     }
 }
 
@@ -693,6 +798,9 @@ void parqueadero::DescomponerInformacionUsuario(string renglon, int PosicionActu
     int ExtraerTipoDeCobro=StringANumero(renglon.substr(0,PosicionComa));
     renglon=renglon.substr(PosicionComa+1, renglon.size()-PosicionComa);
     PosicionComa=renglon.find(",");
+    int ExtraerDia=StringANumero(renglon.substr(0,PosicionComa));
+    renglon=renglon.substr(PosicionComa+1, renglon.size()-PosicionComa);
+    PosicionComa=renglon.find(",");
     int ExtraerHora=StringANumero(renglon.substr(0,PosicionComa));
     renglon=renglon.substr(PosicionComa+1, renglon.size()-PosicionComa);
     PosicionComa=renglon.find(",");
@@ -708,6 +816,7 @@ void parqueadero::DescomponerInformacionUsuario(string renglon, int PosicionActu
     Auxiliar.SetPlacaVehiculo(ExtraerPlaca);
     Auxiliar.SetBanderaParqueadero(ExtraerBanderaParqueadero);
     Auxiliar.SetTipoDeCobro(ExtraerTipoDeCobro);
+    Auxiliar.Ingreso.dia=ExtraerDia;
     Auxiliar.Ingreso.hora=ExtraerHora;
     Auxiliar.Ingreso.minutos=ExtraerMinutos;
     Auxiliar.Ingreso.segundos=ExtraerSegundos;
@@ -788,10 +897,11 @@ void parqueadero::IngresarVehiculoAlParqueadero()
             cout<<"Lo sentimos pero el vehiculo ya se encuentra en el parqueadero. "<<endl;
         }
         else {
+            int PisoSeleccionar;
+            int  escogercelda;
+            int tipoaux;
             if((*i).GetTipoEstacionamiento()=='T'){
-                int tipoaux;
                 if(tipo=="Carro"){
-                    int PisoSeleccionar;
                     do{
                         cout<<"Por favor, ingrese el piso (3 o 4): "<<endl;
                         cin>>PisoSeleccionar;
@@ -806,6 +916,19 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                             cout<<iterador<<" ";
                         }
                         cout<<endl;
+                        list <int>::iterator i=CeldasDisponiblesPiso3.begin();
+                        do{
+                            cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
+                            cin>>escogercelda;
+                            for(i = CeldasDisponiblesPiso3.begin(); i!= CeldasDisponiblesPiso3.end();i++){
+                                if((*i)==escogercelda){
+                                    break;
+                                }
+                            }
+                            if((*i)!=escogercelda)
+                                cout<<"La celda ingresada no se encuentra disponibles. "<<endl;
+
+                        }while((*i)!=escogercelda);
                     }
                     else {
                         cout<<"Celdas disponibles: "<<endl;
@@ -813,14 +936,105 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                             cout<<iterador<<" ";
                         }
                         cout<<endl;
+                        list <int>::iterator i=CeldasDisponiblesPiso4.begin();
+                        do{
+                            cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
+                            cin>>escogercelda;
+                            for(i = CeldasDisponiblesPiso4.begin(); i!= CeldasDisponiblesPiso4.end();i++){
+                                if((*i)==escogercelda){
+                                    break;
+                                }
+                            }
+                            if((*i)!=escogercelda)
+                                cout<<"La celda ingresada no se encuentra disponibles. "<<endl;
+
+                        }while((*i)!=escogercelda);
                     }
+
+
+                    (*i).SetCelda(escogercelda);
+                    (*i).SetPiso(PisoSeleccionar);
+
                 }
                 else if (tipo == "Moto") {
+                    do{
+                        cout<<"Por favor, ingrese el piso (1 o 2): "<<endl;
+                        cin>>PisoSeleccionar;
+                        if(PisoSeleccionar != 1 and PisoSeleccionar != 2)
+                            cout<<"Piso invalido para el tipo de vehiculo. "<<endl;
 
+                    }while(PisoSeleccionar != 1 and PisoSeleccionar != 2);
+
+                    if(PisoSeleccionar==1){
+                        cout<<"Celdas disponibles: "<<endl;
+                        for(int iterador:CeldasDisponiblesPiso1){
+                            cout<<iterador<<" ";
+                        }
+                        cout<<endl;
+                        list <int>::iterator i=CeldasDisponiblesPiso1.begin();
+                        do{
+                            cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
+                            cin>>escogercelda;
+                            for(i = CeldasDisponiblesPiso1.begin(); i!= CeldasDisponiblesPiso1.end();i++){
+                                if((*i)==escogercelda){
+                                    break;
+                                }
+                            }
+                            if((*i)!=escogercelda)
+                                cout<<"La celda ingresada no se encuentra disponibles. "<<endl;
+
+                        }while((*i)!=escogercelda);
+                    }
+                    else {
+                        cout<<"Celdas disponibles: "<<endl;
+                        for(int iterador:CeldasDisponiblesPiso2){
+                            cout<<iterador<<" ";
+                        }
+                        cout<<endl;
+                        list <int>::iterator i=CeldasDisponiblesPiso2.begin();
+                        do{
+                            cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
+                            cin>>escogercelda;
+                            for(i = CeldasDisponiblesPiso2.begin(); i!= CeldasDisponiblesPiso2.end();i++){
+                                if((*i)==escogercelda){
+                                    break;
+                                }
+                            }
+                            if((*i)!=escogercelda)
+                                cout<<"La celda ingresada no se encuentra disponibles. "<<endl;
+
+                        }while((*i)!=escogercelda);
+                    }
+
+
+                    (*i).SetCelda(escogercelda);
+                    (*i).SetPiso(PisoSeleccionar);
                 }
                 else {
-
+                PisoSeleccionar=5;
+                cout<<"Celdas disponibles: "<<endl;
+                for(int iterador:CeldasDisponiblesPiso5){
+                    cout<<iterador<<" ";
                 }
+                cout<<endl;
+                list <int>::iterator i2=CeldasDisponiblesPiso5.begin();
+                do{
+                    cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
+                    cin>>escogercelda;
+                    for(i2 = CeldasDisponiblesPiso5.begin(); i2!= CeldasDisponiblesPiso5.end();i++){
+                        if((*i2)==escogercelda){
+                            break;
+                        }
+                    }
+                    if((*i2)!=escogercelda)
+                        cout<<"La celda ingresada no se encuentra disponibles. "<<endl;
+
+                }while((*i2)!=escogercelda);
+
+                (*i).SetCelda(escogercelda);
+                (*i).SetPiso(PisoSeleccionar);
+                }
+
                 do{
                     cout<<"Ingrese la clase de cobro que se le hara: "<<endl;
                     cout<<"1. Quiero que me cobren por hora. "<<endl;
@@ -840,6 +1054,42 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                 time(&currentTime);
                 struct tm *myTime = localtime(&currentTime);
                 //------------------------------------------
+                (*i).Ingreso.dia=myTime->tm_mday;  //Devuelve el día del mes.
+                (*i).Ingreso.hora=myTime->tm_hour;  //Devuelve la hora.
+                (*i).Ingreso.minutos=myTime->tm_min; // Devuelve los minutos.
+                (*i).Ingreso.segundos=myTime->tm_sec; // Devuelve los segundos.
+
+                //_______________________________
+                auto t = std::time(nullptr); // Obtiene la fecha y hora para el registro.
+                auto tm = *std::localtime(&t);
+                ostringstream oss;
+                oss << put_time(&tm, "%d-%m-%Y %H-%M-%S");
+                auto str = oss.str();
+                str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
+                string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Ingreso de vehiculo" + to_string((*i).GetPiso())+" "+ to_string((*i).GetCelda());
+                if((*i).GetPiso()==1){
+                    MovimientoRegistrar("nivel1.txt",registar);
+                }
+                else if ((*i).GetPiso()==2) {
+                    MovimientoRegistrar("nivel2.txt",registar);
+                }
+                else if ((*i).GetPiso()==3) {
+                    MovimientoRegistrar("nivel3.txt",registar);
+                }
+                else if ((*i).GetPiso()==4) {
+                    MovimientoRegistrar("nivel4.txt",registar);
+                }
+                else {
+                    MovimientoRegistrar("nivel5.txt",registar);
+                }
+                //--------------------------------
+            }
+            else {
+                // Extrae el tiempo
+                time_t currentTime = time(NULL);
+                time(&currentTime);
+                struct tm *myTime = localtime(&currentTime);
+                //------------------------------------------
                 (*i).Ingreso.hora=myTime->tm_hour;
                 (*i).Ingreso.minutos=myTime->tm_min;
                 (*i).Ingreso.segundos=myTime->tm_sec;
@@ -851,10 +1101,22 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                 oss << put_time(&tm, "%d-%m-%Y %H-%M-%S");
                 auto str = oss.str();
                 str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
-                string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Ingreso de vehiculo";
-                //--------------------------------
-            }
-            else {
+                string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Ingreso de vehiculo" + to_string((*i).GetPiso())+" "+ to_string((*i).GetCelda());
+                if((*i).GetPiso()==1){
+                    MovimientoRegistrar("nivel1.txt",registar);
+                }
+                else if ((*i).GetPiso()==2) {
+                    MovimientoRegistrar("nivel2.txt",registar);
+                }
+                else if ((*i).GetPiso()==3) {
+                    MovimientoRegistrar("nivel3.txt",registar);
+                }
+                else if ((*i).GetPiso()==4) {
+                    MovimientoRegistrar("nivel4.txt",registar);
+                }
+                else {
+                    MovimientoRegistrar("nivel5.txt",registar);
+                }
 
             }
         }
@@ -863,3 +1125,240 @@ void parqueadero::IngresarVehiculoAlParqueadero()
         cout<<"La matricula que ha ingresado no se relaciona con el vehiculo. "<<endl;
     }
 }
+
+void parqueadero::SacarVehiculoDelParqueadero()
+{
+    int seleccion;
+    cout<<"Selecciona el tipo de vehiculo e ingresa la placa del mismo: "<<endl;
+    do{
+        cout<<"1. Carro. "<<endl;
+        cout<<"2. Moto.  "<<endl;
+        cout<<"3. Bicicleta. "<<endl;
+        cin>>seleccion;
+        if(seleccion<1 and seleccion>3)
+            cout<<"Opcion invalida. "<<endl;
+    }while(seleccion<1 and seleccion>3);
+
+    string tipo;
+
+    if(seleccion==1){
+        tipo = "Carro";
+    }
+    else if (seleccion==2) {
+        tipo="Moto";
+    }
+    else {
+        tipo="Bicicleta";
+    }
+
+    string matricula;
+    cout<<"Ingrese la placa del vehiculo: "<<endl;
+    cin>>matricula;
+    if(VerificarSiEsELmismoVehiculo(tipo,matricula)==true){
+        list<vehiculo>::iterator i;
+        for ( i = TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();i!=TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.end();i++) {
+            if((*i).GetTipoVehiculo()==tipo and (*i).GetPlacaVehiculo()==matricula){
+                break;
+            }
+        }
+
+        if((*i).GetBanderaParqueadero()==0){
+            cout<<"Lo sentimos, pero no es posible retirar un vehiculo que no se encuentra en el parqueadero. "<<endl;
+        }
+        else {
+            string AutenticarContrasena;
+            cout<<"Necesitamos que verifique dus datos. Ingrese su contrasena: "<<endl;
+            cin>>AutenticarContrasena;
+            if(AutenticarContrasena != TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetContasena()){
+                cout<<"Su contrsena es incorrecta. "<<endl;
+                return;
+            }
+            if((*i).GetTipoEstacionamiento()=='T'){
+                int DiferenciaTiempo;
+                int DineroPagar;
+                // Extrae el tiempo
+                time_t currentTime = time(NULL);
+                time(&currentTime);
+                struct tm *myTime = localtime(&currentTime);
+                //------------------------------------------
+                (*i).Salida.dia=myTime->tm_mday;  //Devuelve el día del mes.
+                (*i).Salida.hora=myTime->tm_hour;  //Devuelve la hora.
+                (*i).Salida.minutos=myTime->tm_min; // Devuelve los minutos.
+                (*i).Salida.segundos=myTime->tm_sec; // Devuelve los segundos.
+
+                if((*i).GetTipoDeCobro()==1){
+                    DiferenciaTiempo= (*i).Salida.hora - (*i).Ingreso.hora;
+                    if((*i).Salida.minutos - (*i).Ingreso.minutos < 15){
+                        DiferenciaTiempo+=1;
+                    }
+                    DineroPagar=TiposDeVehiculos[tipo].at((*i).GetTipoDeCobro()-1)*DiferenciaTiempo;
+                    int dinero;
+                    TiqueteParaUsuario(&(*i),DineroPagar);
+                    do{
+                        cout<<"Ingrese la cantidad de dinero: "<<endl;
+                        cin>>dinero;
+                        if(dinero<DineroPagar)
+                            cout<<"La cantidad de dinero ingresada es insuficiente. "<<endl;
+                    }while(dinero< DineroPagar);
+                     int cambio = dinero -DineroPagar;
+                     //________________________________________________________________________
+                     auto t = std::time(nullptr); // Obtiene la fecha y hora para el registro.
+                     auto tm = *std::localtime(&t);
+                     ostringstream oss;
+                     oss << put_time(&tm, "%d-%m-%Y %H-%M-%S");
+                     auto str = oss.str();
+                     str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
+                     string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Salida de vehiculo" + to_string((*i).GetPiso())+" "+ to_string((*i).GetCelda())+" "+(*i).GetTipoEstacionamiento()+" "+ to_string( DineroPagar) + " "+to_string( cambio);
+                     if((*i).GetPiso()==1){
+                         CeldasDisponiblesPiso1.push_back((*i).GetCelda());
+                         OrdenamientoPorIncersion1();
+                         MovimientoRegistrar("nivel1.txt",registar);
+                     }
+                     else if ((*i).GetPiso()==2) {
+                         CeldasDisponiblesPiso2.push_back((*i).GetCelda());
+                         OrdenamientoPorIncersion2();
+                         MovimientoRegistrar("nivel2.txt",registar);
+                     }
+                     else if ((*i).GetPiso()==3) {
+                         CeldasDisponiblesPiso3.push_back((*i).GetCelda());
+                         OrdenamientoPorIncersion3();
+                         MovimientoRegistrar("nivel3.txt",registar);
+                     }
+                     else if ((*i).GetPiso()==4) {
+                         CeldasDisponiblesPiso4.push_back((*i).GetCelda());
+                         OrdenamientoPorIncersion4();
+                         MovimientoRegistrar("nivel4.txt",registar);
+                     }
+                     else {
+                         CeldasDisponiblesPiso5.push_back((*i).GetCelda());
+                         OrdenamientoPorIncersion5();
+                         MovimientoRegistrar("nivel5.txt",registar);
+                     }
+                     //_____________________________________________________________________________________________
+                     cout<<endl;
+                     cout<<"Su cambio es: "<<endl;
+                     cambio_diniero(&cambio);
+                     cout<<"Con un resto de: "<<cambio<<endl;
+                     (*i).Ingreso.dia=0;
+                     (*i).Ingreso.hora=0;
+                     (*i).Ingreso.minutos=0;
+                     (*i).Ingreso.segundos=0;
+                     (*i).SetPiso(0);
+                     (*i).SetCelda(0);
+                     (*i).SetBanderaParqueadero(0);
+                }
+
+                else {
+                    // Hacer modificaciones para que el programa permita cobrar por horas.
+                    DiferenciaTiempo= (*i).Salida.dia - (*i).Ingreso.dia;
+                    if((*i).Salida.hora - (*i).Ingreso.hora <5){
+                        DiferenciaTiempo+=1;
+                    }
+                    DineroPagar=0;
+                    TiqueteParaUsuario(&(*i),DineroPagar);
+                    auto t = std::time(nullptr); // Obtiene la fecha y hora para el registro.
+                    auto tm = *std::localtime(&t);
+                    ostringstream oss;
+                    oss << put_time(&tm, "%d-%m-%Y %H-%M-%S");
+                    auto str = oss.str();
+                    str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
+                    string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Salida de vehiculo" + to_string((*i).GetPiso())+" "+ to_string((*i).GetCelda())+" "+(*i).GetTipoEstacionamiento()+" "+ to_string( 0) + " "+to_string( 0);
+
+                    if((*i).GetPiso()==1){
+                        MovimientoRegistrar("nivel1.txt",registar);
+                    }
+                    else if ((*i).GetPiso()==2) {
+                        MovimientoRegistrar("nivel2.txt",registar);
+                    }
+                    else if ((*i).GetPiso()==3) {
+                        MovimientoRegistrar("nivel3.txt",registar);
+                    }
+                    else if ((*i).GetPiso()==4) {
+                        MovimientoRegistrar("nivel4.txt",registar);
+                    }
+                    else {
+                        MovimientoRegistrar("nivel5.txt",registar);
+                    }
+                    (*i).Ingreso.dia=0;
+                    (*i).Ingreso.hora=0;
+                    (*i).Ingreso.minutos=0;
+                    (*i).Ingreso.segundos=0;
+                    (*i).SetBanderaParqueadero(0);
+                }
+            }
+            else
+            {
+                string AutenticarContrasena;
+                cout<<"Necesitamos que verifique dus datos. Ingrese su contrasena: "<<endl;
+                cin>>AutenticarContrasena;
+                if(AutenticarContrasena != TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetContasena()){
+                    cout<<"Su contrsena es incorrecta. "<<endl;
+                    return;
+                }
+                auto t = std::time(nullptr); // Obtiene la fecha y hora para el registro.
+                auto tm = *std::localtime(&t);
+                ostringstream oss;
+                oss << put_time(&tm, "%d-%m-%Y %H-%M-%S");
+                auto str = oss.str();
+                str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
+                string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Salida de vehiculo" + to_string((*i).GetPiso())+" "+ to_string((*i).GetCelda())+" "+(*i).GetTipoEstacionamiento();
+                if((*i).GetPiso()==1){
+                    MovimientoRegistrar("nivel1.txt",registar);
+                }
+                else if ((*i).GetPiso()==2) {
+                    MovimientoRegistrar("nivel2.txt",registar);
+                }
+                else if ((*i).GetPiso()==3) {
+                    MovimientoRegistrar("nivel3.txt",registar);
+                }
+                else if ((*i).GetPiso()==4) {
+                    MovimientoRegistrar("nivel4.txt",registar);
+                }
+                else {
+                    MovimientoRegistrar("nivel5.txt",registar);
+                }
+            }
+        }
+
+    }
+    else {
+        cout<<"La matricula ingresada no se relaciona con el vehiculo. "<<endl;
+    }
+}
+
+void parqueadero::TiqueteParaUsuario(vehiculo * VehiculoManipulado, int TotalPagar)
+{
+    cout<<"=============================="<<endl;
+    cout<<"|------- PARQUEADERO --------|"<<endl;
+    cout<<"=============================="<<endl;
+    cout<<"|------- HORA INGRESO -------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|------ "<<VehiculoManipulado->Ingreso.hora<<":"<<VehiculoManipulado->Ingreso.minutos<<VehiculoManipulado->Ingreso.segundos<<" ------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|-------  HORA SALIDA -------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|------ "<<VehiculoManipulado->Salida.hora<<":"<<VehiculoManipulado->Salida.minutos<<VehiculoManipulado->Salida.segundos<<" ------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|------- VALOR A PAGAR ------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|------- "<<TotalPagar<<" -------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"|-------    "<<VehiculoManipulado->GetTipoEstacionamiento()<<"    -------|"<<endl;
+    cout<<"|------- GRACIAS POR  -------|"<<endl;
+    cout<<"|-------  SU VISITA   -------|"<<endl;
+    cout<<"|-------              -------|"<<endl;
+    cout<<"=============================="<<endl;
+    char r;
+    cout<<"Ingrese cualquier letra para continuar: "<<endl;
+    cin>>r;
+}
+
+bool parqueadero::VerificarInicioSesion(string Nentrante, string Centrante)
+{
+    if(Nentrante==UsuarioAdmi and Centrante==ContrasenaAdmni)
+        return true;
+
+    return false;
+}
+
