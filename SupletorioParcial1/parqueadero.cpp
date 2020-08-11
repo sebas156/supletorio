@@ -38,6 +38,8 @@ char parqueadero::MenuInterfazUsuario()
 {
     char opcion;
     do{
+        cout<<endl;
+        cout<<endl;
         cout<<"Bienvenido: "<<TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()<<endl;
         cout<<"A. Registrar otro vehiculo a mi nombre. "<<endl;
         cout<<"B. Eliminar vehiculo a mi nombre. "<<endl;
@@ -369,7 +371,7 @@ void parqueadero::CambiarTipoDeEstacionamiento()
                     do{
                         cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
                         cin>>escogercelda;
-                        for(i2 = CeldasDisponiblesPiso5.begin(); i2!= CeldasDisponiblesPiso5.end();i++){
+                        for(i2 = CeldasDisponiblesPiso5.begin(); i2!= CeldasDisponiblesPiso5.end();i2++){
                             if((*i2)==escogercelda){
                                 break;
                             }
@@ -549,14 +551,13 @@ void parqueadero::MisVehiculos()
         cout<<"Aun no tienes ningun vehiculo registrado a tu nombre. "<<endl;
         return;
     }
-    cout<<"Tipo                Placa            Tipo de estacionamiento             Piso              Celda"<<endl;
+    cout<<"Tipo                Placa            Tipo de estacionamiento             Piso              Celda           Bandera Parqueadero.  "<<endl;
     for(auto i : TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados){
-        //cout<<i.GetTipoVehiculo()<<"           "<<i.GetPlacaVehiculo()<<"            "<<i.GetTipoEstacionamiento()<<"           "<<i.GetPiso()<<"             "<<i.GetCelda()<<"      "<<endl;
         cout<<i.GetTipoVehiculo();
         for (int iterador=1;iterador<=20 - i.GetTipoVehiculo().size();iterador++) {
             cout<<" ";
         }
-        cout<<i.GetPlacaVehiculo()<<"                        "<<i.GetTipoEstacionamiento()<<"                       "<<i.GetPiso()<<"                 "<<i.GetCelda()<<"      "<<endl;
+        cout<<i.GetPlacaVehiculo()<<"                        "<<i.GetTipoEstacionamiento()<<"                       "<<i.GetPiso()<<"                 "<<i.GetCelda()<<"                      "<<i.GetBanderaParqueadero()<<endl;
     }
 }
 
@@ -646,7 +647,7 @@ void parqueadero::RegistroDeVehiculosPorNivel(int NivelSelecccionado)
     for (auto Iterador1 : TodosLosUsuarios) {
         for(auto Iterador2:Iterador1.VehiculosRegistrados){
             if(Iterador2.GetPiso()==NivelSelecccionado and Iterador2.GetBanderaParqueadero()==1){
-                cout<<Iterador2.GetCelda()<<"      "<<Iterador2.GetPlacaVehiculo()<<"     "<<Iterador2.Ingreso.hora<<":"<<Iterador2.Ingreso.minutos<<":"<<Iterador2.Ingreso.segundos<<"          "<<Iterador2.GetTipoEstacionamiento()<<"      "<<endl;
+                cout<<Iterador2.GetCelda()<<"                   "<<Iterador2.GetPlacaVehiculo()<<"                 "<<Iterador2.Ingreso.hora<<":"<<Iterador2.Ingreso.minutos<<":"<<Iterador2.Ingreso.segundos<<"                  "<<Iterador2.GetTipoEstacionamiento()<<"      "<<endl;
             }
         }
     }
@@ -736,7 +737,6 @@ char parqueadero::MenoPricipal()
         cin>>opcion;
         if(opcion != 'A' and opcion != 'B' and opcion != 'C' and opcion != 'D'){
             cout<<"Opcion invalida. "<<endl;
-            system("CLS");
         }
 
     }while(opcion != 'A' and opcion != 'B' and opcion != 'C' and opcion != 'D');
@@ -1253,7 +1253,7 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                 do{
                     cout<<"Ingrese la celda en la que desea  estacionarse: "<<endl;
                     cin>>escogercelda;
-                    for(i2 = CeldasDisponiblesPiso5.begin(); i2!= CeldasDisponiblesPiso5.end();i++){
+                    for(i2 = CeldasDisponiblesPiso5.begin(); i2!= CeldasDisponiblesPiso5.end();i2++){
                         if((*i2)==escogercelda){
                             break;
                         }
@@ -1319,9 +1319,10 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                 //--------------------------------
                 // Registra en el archivo del usuario los cambios realizados a los vehiculos del mismo .
                 RegistrarArchivoPorUsuario(TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+".txt", PosicionUsuarioQueHaIniciadoSesion);
+                cout<<"El ingreso al parquedaero se realizo con exito."<<endl;
             }
             else {
-                (*i).SetBanderaParqueadero(0);
+                (*i).SetBanderaParqueadero(1);
                 // Extrae el tiempo
                 time_t currentTime = time(NULL);
                 time(&currentTime);
@@ -1355,6 +1356,7 @@ void parqueadero::IngresarVehiculoAlParqueadero()
                     MovimientoRegistrar("nivel5.txt",registar);
                 }
                 RegistrarArchivoPorUsuario(TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+".txt", PosicionUsuarioQueHaIniciadoSesion);
+                cout<<"El ingreso al parquedaero se realizo con exito."<<endl;
             }
         }
     }
@@ -1599,6 +1601,7 @@ void parqueadero::TiqueteParaUsuario(vehiculo * VehiculoManipulado, int TotalPag
     cout<<"|-------  SU VISITA   -------|"<<endl;
     cout<<"|-------              -------|"<<endl;
     cout<<"=============================="<<endl;
+    cout<<endl;
     char r;
     cout<<"Ingrese cualquier letra para continuar: "<<endl;
     cin>>r;
