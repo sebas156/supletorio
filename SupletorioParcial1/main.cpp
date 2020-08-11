@@ -18,11 +18,10 @@ int main()
         if(OpcionMayor=='A'){
             string NombreUsuario;
             string contrasena;
-            cout<<"Ingresa el nombre de usuario con el que quieres quedar registrado en el sistema: "<<endl;
+            cout<<"Ingresa el nombre de usuario para el administrador: "<<endl;
             getline(cin,NombreUsuario);
             getline(cin,NombreUsuario);
             cout<<"Ingresa la contrasena: "<<endl;
-            getline(cin,contrasena);
             getline(cin,contrasena);
             if(ParqueaderoNuevo.VerificarInicioSesion(NombreUsuario,contrasena)==true){
                 char OpcionMenor;
@@ -90,9 +89,14 @@ int main()
                         ParqueaderoNuevo.ReporteTotalEnLoQueVaDelDia();
                         break;
                     }
-                    default:
+                    case 'G':
                     {
                         cout<<"Gracias por confiar en nosostros. "<<endl;
+                        break;
+                    }
+                    default:
+                    {
+                        cout<<"La opcion no se reconoce. "<<endl;
                         break;
                     }
                  }
@@ -106,39 +110,38 @@ int main()
         else if (OpcionMayor=='B') {
             string NombreUsuario;
             string contrasena;
-            cout<<"Ingresa el nombre de usuario con el que quieres quedar registrado en el sistema: "<<endl;
+            cout<<"Ingresa el nombre de usuario: "<<endl;
             getline(cin,NombreUsuario);
             getline(cin,NombreUsuario);
             cout<<"Ingresa la contrasena: "<<endl;
             getline(cin,contrasena);
-            getline(cin,contrasena);
 
-            if(ParqueaderoNuevo.BuscarUsuarioIngresado(NombreUsuario,NombreUsuario)==true){
+            if(ParqueaderoNuevo.BuscarUsuarioIngresado(NombreUsuario,contrasena)==true){
                 char OpcionMenor;
                 do{
                     OpcionMenor=ParqueaderoNuevo.MenuInterfazUsuario();
                     switch (OpcionMenor) {
                     case 'A' :
                     {
-                        int AuxSeleccionNivel;
+                        int AuxSeleccionTipo;
                         string Placa;
                         cout<<"1. Carro. "<<endl;
                         cout<<"2. Moto.  "<<endl;
                         cout<<"3. Bicicleta. "<<endl;
                         do{
                             cout<<"Ingresa el tipo del vehiculo: "<<endl;
-                            cin>>AuxSeleccionNivel;
-                            if(AuxSeleccionNivel<1 or AuxSeleccionNivel>3){
+                            cin>>AuxSeleccionTipo;
+                            if(AuxSeleccionTipo<1 or AuxSeleccionTipo>3){
                                 cout<<"Opcion invalida. "<<endl;
                             }
-                        }while(AuxSeleccionNivel<1 or AuxSeleccionNivel>3);
+                        }while(AuxSeleccionTipo<1 or AuxSeleccionTipo>3);
 
                         cout<<"Ingrese la placa: "<<endl;
-                        getline(cin,Placa);
-                        if(AuxSeleccionNivel==1){
+                        cin>>Placa;
+                        if(AuxSeleccionTipo==1){
                             ParqueaderoNuevo.AgregarVehiculoAmiNombre("Carro",Placa);
                         }
-                        else if (AuxSeleccionNivel==2) {
+                        else if (AuxSeleccionTipo==2) {
                             ParqueaderoNuevo.AgregarVehiculoAmiNombre("Moto",Placa);
                         }
                         else {
@@ -162,7 +165,7 @@ int main()
                         }while(AuxSeleccionNivel<1 or AuxSeleccionNivel>3);
 
                         cout<<"Ingrese la placa: "<<endl;
-                        getline(cin,Placa);
+                        cin>>Placa;
                         if(AuxSeleccionNivel==1){
                             ParqueaderoNuevo.EliminarVehiculoAmiNombre("Carro",Placa);
                         }
@@ -199,9 +202,14 @@ int main()
                         ParqueaderoNuevo.SacarVehiculoDelParqueadero();
                         break;
                     }
-                    default:
+                    case 'H':
                     {
                         cout<<"Gracias por confiar en nosostros. "<<endl;
+                        break;
+                    }
+                    default:
+                    {
+                        cout<<"La opcion seleccionada no se reconoce. "<<endl;
                         break;
                     }
                 }
@@ -219,7 +227,6 @@ int main()
             getline(cin,NombreUsuario);
             getline(cin,NombreUsuario);
             cout<<"Ingresa la contrasena: "<<endl;
-            getline(cin,contrasena);
             getline(cin,contrasena);
             ParqueaderoNuevo.RegistrarNuevoUsuario(NombreUsuario,contrasena);
         }

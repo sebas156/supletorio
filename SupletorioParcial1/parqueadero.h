@@ -62,24 +62,19 @@ public:
     void RegistrarUsuariosActuales();
     void RegistrarArchivoPorUsuario(string,int);
     void DesactivarCeldasOcupadas();
-    void OrdenamientoPorIncersion1();
-    void OrdenamientoPorIncersion2();
-    void OrdenamientoPorIncersion3();
-    void OrdenamientoPorIncersion4();
-    void OrdenamientoPorIncersion5();
     //_____________________________________________________________
 private:
-    vector<usuario> TodosLosUsuarios;
-    string UsuarioAdmi,ContrasenaAdmni;
-    int PosicionUsuarioQueHaIniciadoSesion;
-    map<string,vector<int>> TiposDeVehiculos;
-    int CeldasTotalesP12=70;
-    int CeldasTotalesP345=50;
-    list<int> CeldasDisponiblesPiso1;
-    list<int> CeldasDisponiblesPiso2;
-    list<int> CeldasDisponiblesPiso3;
-    list<int> CeldasDisponiblesPiso4;
-    list<int> CeldasDisponiblesPiso5;
+    vector<usuario> TodosLosUsuarios; // Vector que contiene todos los usuarios registrados.
+    string UsuarioAdmi,ContrasenaAdmni; // Usuario y contraseña del administrador. Desde el contstrucor se extrae.
+    int PosicionUsuarioQueHaIniciadoSesion; // Guarde la posicion del usuario que haya iniciado sesion en el arreglo. Para acceder a el de manera rápida.
+    map<string,vector<int>> TiposDeVehiculos; // Contiene las tarifas.
+    int CeldasTotalesP12=70;           // Es el numero de celdas totales que hay en el piso 1 y 2. Corresponde a motos.
+    int CeldasTotalesP345=50;          // Es el numero de celdas totales que hay en los pisos 1,2 y3.
+    list<int> CeldasDisponiblesPiso1;  // Contiene las celdas disponibles que hay en el piso 1.
+    list<int> CeldasDisponiblesPiso2;  // Contiene las celdas disponibles que hay en el piso 2.
+    list<int> CeldasDisponiblesPiso3;  // Contiene las celdas disponibles que hay en el piso 3.
+    list<int> CeldasDisponiblesPiso4;  // Contiene las celdas disponibles que hay en el piso 4.
+    list<int> CeldasDisponiblesPiso5;  // Contiene las celdas disponibles que hay en el piso 5.
 
 };
 
