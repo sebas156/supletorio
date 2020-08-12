@@ -114,16 +114,25 @@ void parqueadero::EliminarVehiculoAmiNombre(string Tipo, string placa)
     // Recibe el tipo de vehiculo y la placa del vehiculo que se va a elimnar de los vehiculos a nombre del usuario que ha iniciado sesion.
     if(VerificarSiEsELmismoVehiculo(Tipo,placa)==true){ // Verifica que el vehiculo sí esté dentro de los veiculos registrados.
         //Itera sobre los vehiculos del usuario.
-        for (auto i = TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();i!=TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.end(); i++) {
+        list<vehiculo>::iterator i=TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();
+        for ( i = TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();i!=TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.end(); i++) {
             if((*i).GetPlacaVehiculo()==placa and (*i).GetTipoVehiculo()==Tipo){
-                //Una vez que el tipo de vehiculo y placa coincide se procede a eliminar.
-                TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.erase(i);
-                i = TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();
+                //Una vez que el tipo de vehiculo y placa coincide se procede a verificar si el vehiculo está dentro del parqueadero.
+                // Si no es así entonces se elimina.
+                if((*i).GetBanderaParqueadero()==0){
+                    TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.erase(i);
+                    i = TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].VehiculosRegistrados.begin();
+                }
+                else {
+                    cout<<"Lo sentimos, pero no es posible eliminar un vehiculo que se encuentre dentro del parqueadero. "<<endl;
+                }
             }
         }
         // Guarda los cambios.
-        RegistrarArchivoPorUsuario(TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+".txt",PosicionUsuarioQueHaIniciadoSesion);
-        cout<<"Vehiculo eliminado exitosamente. "<<endl;
+        if((*i).GetBanderaParqueadero()==0){
+            RegistrarArchivoPorUsuario(TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+".txt",PosicionUsuarioQueHaIniciadoSesion);
+            cout<<"Vehiculo eliminado exitosamente. "<<endl;
+        }
         char a;
         cout<<"Ingrese cualquier tecla para continuar: "<<endl;
         cin>>a;
@@ -1453,6 +1462,8 @@ void parqueadero::SacarVehiculoDelParqueadero()
                      str= "Fecha: "+ str.substr(0,str.find(" "))+" Hora: "+ str.substr(str.find(" ")+1,str.size()-str.find(" "));
                      string registar = str + " "+TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+" "+tipo+" "+matricula+" "+ "Salida de vehiculo Piso: " + to_string((*i).GetPiso())+" Celda: "+ to_string((*i).GetCelda())+" "+(*i).GetTipoEstacionamiento()+" Total: "+ to_string( DineroPagar) + " Cambio: "+to_string( cambio);
                      if((*i).GetPiso()==1){
+                         // Devuelve la celda que estaba ocuapda a las celdas disponibles y luego ordena
+                         // la lista.
                          CeldasDisponiblesPiso1.push_back((*i).GetCelda());
                          CeldasDisponiblesPiso1.sort();
                          MovimientoRegistrar("nivel1.txt",registar);
@@ -1495,12 +1506,14 @@ void parqueadero::SacarVehiculoDelParqueadero()
                 }
 
                 else {
-                    // Hacer modificaciones para que el programa permita cobrar por horas.
                     DiferenciaTiempo= (*i).Salida.dia - (*i).Ingreso.dia;
                     if(abs((*i).Salida.hora - (*i).Ingreso.hora) <5){
                         DiferenciaTiempo+=1;
                     }
-                    DineroPagar=0;
+                    if(DiferenciaTiempo==0){
+                        cout<<"Lo sentimos pero para poder sacar el vehiculo se debe cumplir al menos un día. "<<endl;
+                        return;
+                    }
                     TiqueteParaUsuario(&(*i),DineroPagar);
                     auto t = std::time(nullptr); // Obtiene la fecha y hora para el registro.
                     auto tm = *std::localtime(&t);
@@ -1529,6 +1542,8 @@ void parqueadero::SacarVehiculoDelParqueadero()
                     (*i).Ingreso.hora=0;
                     (*i).Ingreso.minutos=0;
                     (*i).Ingreso.segundos=0;
+                    (*i).SetPiso(0);
+                    (*i).SetCelda(0);
                     (*i).SetBanderaParqueadero(0);
                     (*i).SetTipoDeCobro(0);
                     RegistrarArchivoPorUsuario(TodosLosUsuarios[PosicionUsuarioQueHaIniciadoSesion].GetNombreUsuario()+".txt",PosicionUsuarioQueHaIniciadoSesion);

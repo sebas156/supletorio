@@ -17,27 +17,34 @@ public:
     parqueadero();
     //Para usuario
     //_____________________________________________________________
+    //-------------------------------------------------------------
+    //Funciones secundarias. No se explican.
     bool BuscarUsuarioIngresado(string,string);
     char MenuInterfazUsuario();
     void RegistrarNuevoUsuario(string, string);
+    bool VerificarNombreIngresadoEstaEnArreglo(string);
+    void cambio_diniero(int *);
+    void TiqueteParaUsuario(vehiculo* ,int);
+    void MovimientoRegistrar(string,string);
+    //-------------------------------------------------------------
+
     void AgregarVehiculoAmiNombre(string,string);
     void EliminarVehiculoAmiNombre(string,string);
     bool VerificarSiEsELmismoVehiculo(string,string);
-    bool VerificarNombreIngresadoEstaEnArreglo(string);
-    void CambiarTipoDeEstacionamiento();
     void MisVehiculos();
-    void cambio_diniero(int *);
-    void MovimientoRegistrar(string,string);
+    void CambiarTipoDeEstacionamiento();
     void IngresarVehiculoAlParqueadero();
     void SacarVehiculoDelParqueadero();
-    void TiqueteParaUsuario(vehiculo* ,int);
     //_____________________________________________________________
 
     //Para Administrador
     //_____________________________________________________________
+    //-------------------------------------------------------------
+    // Funciones secundarias. No se explican.
     bool VerificarInicioSesion(string, string);
     char MenuInterfazAdministrador();
     void ArchivoAdministrador();
+    //-------------------------------------------------------------
     void PorcentajeOcupadoDeCadaUnoDelosPisos();
     void RegistroDeVehiculosPorNivel(int);
     void CambiarCrearTabladeTarifas();

@@ -1,0 +1,3 @@
+
+Fecha: 11-08-2020 Hora: 15-16-13 sebas Bicicleta REC456 Ingreso de vehiculo Piso: 5 Celda: 10
+Fecha: 11-08-2020 Hora: 15-23-49 juan Bicicleta GHJ908 T - > M Ocupa piso: 5 Ocupa celda: 5 Pago con: 70000 Cambio: 5000

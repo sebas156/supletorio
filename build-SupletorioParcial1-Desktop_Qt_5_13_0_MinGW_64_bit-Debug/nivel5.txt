@@ -1,4 +1,0 @@
-
-Fecha: 10-08-2020 Hora: 22-25-17 sebas Bicicleta WER345 T - > M Ocupa piso: 5 Ocupa celda: 10 Pago con: 80000 Cambio: 15000
-Fecha: 10-08-2020 Hora: 22-25-41 sebas Bicicleta WER345 Ingreso de vehiculo Piso: 5 Celda: 10 M
-Fecha: 10-08-2020 Hora: 22-33-55 sebas Bicicleta WER345 M - > T Desocupa piso: 5 Desocupa celda: 10 Pago con: 0 Cambio: 0

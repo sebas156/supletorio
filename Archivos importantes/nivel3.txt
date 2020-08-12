@@ -1,0 +1,6 @@
+Fecha: 11-08-2020 Hora: 15-15-26 sebas Carro ABC137 Ingreso de vehiculo Piso: 3 Celda: 3
+Fecha: 11-08-2020 Hora: 15-18-40 gloria Carro BMW156 Ingreso de vehiculo Piso: 3 Celda: 4
+Fecha: 11-08-2020 Hora: 15-19-16 gloria Carro JKL987 Ingreso de vehiculo Piso: 3 Celda: 9
+Fecha: 11-08-2020 Hora: 15-20-13 gloria Carro POI745 Ingreso de vehiculo Piso: 3 Celda: 8
+Fecha: 11-08-2020 Hora: 15-22-43 juan Carro RTY678 Ingreso de vehiculo Piso: 3 Celda: 6
+Fecha: 11-08-2020 Hora: 15-26-00 sebas Carro ABC137 Salida de vehiculo Piso: 3 Celda: 3 T Total: 18000 Cambio: 2000
